@@ -1,0 +1,22 @@
+.overlay[data-reach-dialog-overlay] {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* Always displays above all other elements */
+  z-index: 1000;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.48);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content[data-reach-dialog-content] {
+  width: 100%;
+  margin: 0;
+  padding: var(--edge-padding-v) var(--edge-padding-h);
+  background: var(--background);
+  outline: none;
+}

@@ -1,0 +1,14 @@
+.textButton {
+  background: transparent;
+  outline: none;
+  padding: 0;
+  color: var(--foreground);
+}
+
+.textButton:hover {
+  color: var(--accent);
+}
+
+.underlined {
+  text-decoration: underline;
+}

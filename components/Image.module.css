@@ -1,0 +1,21 @@
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.withPlaceholderBG {
+  background: rgba(var(--foreground-alpha), 0.02);
+}
+
+.imageWrapper img {
+  transition: opacity 250ms ease-in-out;
+}
+
+.imageLoading {
+  opacity: 0;
+}
+
+.imageLoaded {
+  opacity: 1;
+}

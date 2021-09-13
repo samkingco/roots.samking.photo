@@ -1,16 +1,147 @@
+@font-face {
+  font-family: "Text";
+  font-display: fallback;
+  src: url("fonts/Mono.woff") format("woff"),
+    url("fonts/Mono.woff2") format("woff2");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Nikolai";
+  font-display: fallback;
+  src: url("fonts/Nikolai.woff") format("woff"),
+    url("fonts/Nikolai.woff2") format("woff2");
+  font-style: normal;
+  font-weight: bold;
+}
+
+:root {
+  --background: rgb(0, 0, 0);
+  --background-alpha: 0, 0, 0;
+  --foreground: rgb(255, 255, 255);
+  --foreground-alpha: 255, 255, 255;
+  --subdued: rgb(180 180 180);
+  --accent: rgb(245, 42, 42);
+  --edge-padding-h: 4vw;
+  --edge-padding-v: 4em;
+  --reach-dialog: 1;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--background);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: rgb(255, 255, 255);
+    --background-alpha: 255, 255, 255;
+    --foreground: rgb(0, 0, 0);
+    --foreground-alpha: 0, 0, 0;
+    --subdued: rgb(88 88 88);
+    --accent: rgb(245, 42, 42);
+  }
+
+  ::selection {
+    color: var(--foreground);
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body {
+  min-height: 100%;
+  font-family: "Text", SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono,
+    monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--foreground);
+  background-color: var(--background);
+  cursor: crosshair;
+}
+
+.content {
+  padding: var(--edge-padding-v) var(--edge-padding-h);
+}
+
+h1,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h3 {
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 2rem;
+  font-family: "Nikolai", serif;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+h1 + p,
+h3 + p,
+p + p {
+  margin-top: 0.5rem;
+}
+
+hr {
+  border: none;
+  background: rgba(var(--foreground-alpha), 0.1);
+  width: 100%;
+  max-width: 4rem;
+  height: 1px;
+  margin: 2rem 0;
 }
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: underline;
+  cursor: inherit;
 }
 
-* {
-  box-sizing: border-box;
+a:hover {
+  color: var(--accent);
+}
+
+button {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.5;
+  margin: 0;
+  overflow: visible;
+  text-transform: none;
+  border: none;
+  cursor: inherit;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+.subdued {
+  color: var(--subdued);
 }
