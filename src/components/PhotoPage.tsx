@@ -38,6 +38,9 @@ export function PhotoPage({ photo, onClose, closeHref, totalPhotos }: Props) {
         scroll: false,
       });
     }
+    if (["Escape"].includes(key) && closeHref) {
+      router.push(closeHref);
+    }
   };
 
   useEffect(() => {
