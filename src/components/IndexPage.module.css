@@ -24,7 +24,7 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  padding: 4rem 0;
+  padding-top: 1rem;
 }
 
 .controls,
@@ -34,8 +34,8 @@
   grid-gap: 0.5rem;
   grid-auto-columns: min-content;
   grid-auto-flow: column;
-  padding: 1rem;
-  margin: -1rem;
+  padding: 1rem var(--edge-padding-h);
+  margin: -1rem calc(var(--edge-padding-h) * -1);
   background: var(--background);
 }
 
@@ -141,5 +141,19 @@
     grid-column: auto/span 2;
     margin: 0 auto;
     padding: 0 2vw;
+  }
+
+  .sectionControls {
+    padding: 2rem 0 0;
+  }
+
+  .controls,
+  .links {
+    padding: 1rem;
+    margin: -1rem;
+  }
+
+  .sectionPhotos {
+    padding-top: 6rem;
   }
 }

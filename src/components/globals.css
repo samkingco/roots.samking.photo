@@ -24,7 +24,7 @@
   --foreground-alpha: 255, 255, 255;
   --subdued: rgb(180 180 180);
   --accent: rgb(245, 42, 42);
-  --edge-padding-h: 2rem;
+  --edge-padding-h: 1rem;
   --edge-padding-v: 2rem;
 }
 
