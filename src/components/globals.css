@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "Text";
+  font-family: "Mono";
   font-display: fallback;
   src: url("fonts/Mono.woff") format("woff"),
     url("fonts/Mono.woff2") format("woff2");
@@ -17,6 +17,7 @@
 }
 
 :root {
+  --reach-dialog: 1;
   --background: rgb(0, 0, 0);
   --background-alpha: 0, 0, 0;
   --foreground: rgb(255, 255, 255);
@@ -25,27 +26,6 @@
   --accent: rgb(245, 42, 42);
   --edge-padding-h: 4vw;
   --edge-padding-v: 4em;
-  --reach-dialog: 1;
-}
-
-::selection {
-  background-color: var(--accent);
-  color: var(--background);
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: rgb(255, 255, 255);
-    --background-alpha: 255, 255, 255;
-    --foreground: rgb(0, 0, 0);
-    --foreground-alpha: 0, 0, 0;
-    --subdued: rgb(88 88 88);
-    --accent: rgb(245, 42, 42);
-  }
-
-  ::selection {
-    color: var(--foreground);
-  }
 }
 
 *,
@@ -66,7 +46,7 @@ body {
 
 body {
   min-height: 100%;
-  font-family: "Text", SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono,
+  font-family: "Mono", SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono,
     monospace;
   font-size: 14px;
   line-height: 1.5;
@@ -75,8 +55,9 @@ body {
   cursor: crosshair;
 }
 
-.content {
-  padding: var(--edge-padding-v) var(--edge-padding-h);
+::selection {
+  background-color: var(--accent);
+  color: var(--background);
 }
 
 h1,
@@ -91,27 +72,42 @@ h3 {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 2em;
   font-family: "Nikolai", serif;
+  color: var(--background);
+  background: var(--accent);
+  padding: 0 0.4em;
+  width: auto;
+  display: inline-block;
+}
+
+h1::selection {
+  background: var(--foreground);
 }
 
 h3 {
-  font-size: 1rem;
+  font-size: 1em;
 }
 
 h1 + p,
+h1 + h3,
 h3 + p,
 p + p {
   margin-top: 0.5rem;
 }
 
+ul {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
 hr {
-  border: none;
-  background: rgba(var(--foreground-alpha), 0.1);
   width: 100%;
   max-width: 4rem;
   height: 1px;
   margin: 2rem 0;
+  border: none;
+  background: rgba(var(--foreground-alpha), 0.1);
 }
 
 a {
@@ -124,11 +120,26 @@ a:hover {
   color: var(--accent);
 }
 
+a:focus {
+  color: var(--background);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent);
+  text-decoration: none;
+  outline: none;
+}
+
+a:focus:hover {
+  color: var(--background);
+  background: var(--foreground);
+  box-shadow: 0 0 0 4px var(--foreground);
+}
+
+/* Button reset */
 button {
+  margin: 0;
   font-family: inherit;
   font-size: 100%;
   line-height: 1.5;
-  margin: 0;
   overflow: visible;
   text-transform: none;
   border: none;
@@ -144,4 +155,27 @@ button,
 
 .subdued {
   color: var(--subdued);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: rgb(255, 255, 255);
+    --background-alpha: 255, 255, 255;
+    --foreground: rgb(0, 0, 0);
+    --foreground-alpha: 0, 0, 0;
+    --subdued: rgb(88 88 88);
+    --accent: rgb(245, 42, 42);
+  }
+
+  ::selection {
+    color: var(--foreground);
+  }
+
+  h1 {
+    color: var(--foreground);
+  }
+
+  a:focus {
+    color: var(--foreground);
+  }
 }

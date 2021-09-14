@@ -29,7 +29,7 @@
   grid-template-columns: 2fr 1fr;
   align-items: center;
   position: sticky;
-  top: 0;
+  top: -2rem;
   z-index: 1;
   mix-blend-mode: difference;
 }
@@ -44,6 +44,7 @@
 }
 
 .links {
+  grid-gap: 1rem;
   justify-self: flex-end;
   justify-content: flex-end;
   text-align: right;

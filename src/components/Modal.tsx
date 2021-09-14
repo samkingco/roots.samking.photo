@@ -3,7 +3,7 @@ import {
   DialogOverlay as ReachDialogOverlay,
   DialogContent as ReachDialogContent,
 } from "@reach/dialog";
-import styles from "./Modal.module.css";
+import styles from "@components/Modal.module.css";
 
 interface ModalProps {
   children: React.ReactNode;
@@ -18,6 +18,7 @@ export function Modal({ children, a11yLabel, isOpen, onClose }: ModalProps) {
       className={styles.overlay}
       isOpen={isOpen}
       onDismiss={onClose}
+      allowPinchZoom
     >
       <ReachDialogContent className={styles.content} aria-label={a11yLabel}>
         <div>{children}</div>

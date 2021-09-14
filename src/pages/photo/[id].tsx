@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { data, Photo } from "../../content";
-import { PhotoPage } from "../../components/PhotoPage";
+import { data, Photo } from "@content/index";
+import { PhotoPage } from "@components/PhotoPage";
 
 interface Params extends ParsedUrlQuery {
   id: string;

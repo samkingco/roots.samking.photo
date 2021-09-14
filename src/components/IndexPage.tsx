@@ -3,19 +3,19 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useContextualRouting } from "next-use-contextual-routing";
 import clsx from "clsx";
-import { data, Photo } from "../content";
-import { Image } from "../components/Image";
-import { Modal } from "../components/Modal";
-import { PhotoPage } from "../components/PhotoPage";
-import { TextButton } from "../components/TextButton";
-import styles from "../styles/IndexPage.module.css";
+import { data, Photo } from "@content/index";
+import { Image } from "@components/Image";
+import { Modal } from "@components/Modal";
+import { PhotoPage } from "@components/PhotoPage";
+import { TextButton } from "@components/TextButton";
+import styles from "@components/IndexPage.module.css";
 
 enum Layout {
   SCROLL = "scroll",
   GRID = "grid",
 }
 
-export default function IndexPage() {
+export function IndexPage() {
   const router = useRouter();
   const { returnHref, makeContextualHref } = useContextualRouting();
   const [layout, setLayout] = useState<Layout>(Layout.SCROLL);
@@ -54,14 +54,22 @@ export default function IndexPage() {
           maximus, faucibus erat at, laoreet nisi.
         </p>
         <hr />
-        <p>
-          Collection of {data.length} photos dropping on{" "}
-          <a href={openSeaLink}>OpenSea</a> 01/10/2021.
-        </p>
-        <p>
-          Follow on <a href={twitterLink}>Twitter</a> and{" "}
-          <a href={instagramLink}>Instagram</a> for updates.
-        </p>
+        <ul>
+          <li>
+            <p>Collection of {data.length} unique photographs for sale</p>
+          </li>
+          <li>
+            <p>
+              Launches on <a href={openSeaLink}>OpenSea</a> 10 October 2021
+            </p>
+          </li>
+          <li>
+            <p>
+              <a href={twitterLink}>Twitter</a> and{" "}
+              <a href={instagramLink}>Instagram</a> for updates
+            </p>
+          </li>
+        </ul>
       </section>
 
       <section className={clsx(styles.section, styles.sectionControls)}>
@@ -129,7 +137,7 @@ export default function IndexPage() {
       </section>
 
       <Modal
-        a11yLabel="Detail view of photo"
+        a11yLabel={`Detail view of photo #${modalPhoto?.id}`}
         isOpen={Boolean(!!router.query.photo && modalPhoto)}
         onClose={onModalClose}
       >

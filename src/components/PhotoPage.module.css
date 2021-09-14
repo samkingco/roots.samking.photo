@@ -1,0 +1,17 @@
+.page {
+  height: calc(100vh - (var(--edge-padding-v) * 2));
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  grid-gap: 1rem;
+}
+
+.page p {
+  max-width: 40rem;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  margin-bottom: 2rem;
+}

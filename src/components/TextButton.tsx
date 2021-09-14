@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import styles from "./TextButton.module.css";
+import styles from "@components/TextButton.module.css";
 
 interface Props extends React.HTMLProps<HTMLButtonElement> {
   type?: "button" | "submit" | "reset";
@@ -15,7 +15,7 @@ export function TextButton({
     <button
       className={clsx(
         className,
-        styles.textButton,
+        styles.button,
         showUnderline && styles.underlined
       )}
       {...props}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import NextImage, { ImageProps } from "next/image";
 import clsx from "clsx";
-import styles from "./Image.module.css";
+import styles from "@components/Image.module.css";
 
 interface Props extends ImageProps {
   withPlaceholderBG?: boolean;
