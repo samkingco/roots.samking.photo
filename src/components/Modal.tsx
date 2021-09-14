@@ -21,7 +21,7 @@ export function Modal({ children, a11yLabel, isOpen, onClose }: ModalProps) {
       allowPinchZoom
     >
       <ReachDialogContent className={styles.content} aria-label={a11yLabel}>
-        <div>{children}</div>
+        {children}
       </ReachDialogContent>
     </ReachDialogOverlay>
   );

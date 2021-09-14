@@ -1,5 +1,5 @@
 .page {
-  height: calc(100vh - (var(--edge-padding-v) * 2));
+  height: 100%;
   display: grid;
   grid-template-rows: min-content 1fr;
   grid-gap: 1rem;

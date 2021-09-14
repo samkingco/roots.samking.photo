@@ -41,7 +41,10 @@
   box-sizing: border-box;
 }
 
-html {
+html,
+body,
+body > div:first-child,
+div#__next {
   height: 100%;
 }
 
@@ -52,7 +55,6 @@ body {
 }
 
 body {
-  min-height: 100%;
   font-family: "Mono", SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono,
     monospace;
   font-size: 14px;
