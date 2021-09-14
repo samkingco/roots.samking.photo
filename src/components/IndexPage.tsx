@@ -141,9 +141,11 @@ export function IndexPage() {
           <a href={openSeaLink} aria-label="OpenSea">
             OS
           </a>
+          <span className="subdued">·</span>
           <a href={twitterLink} aria-label="Twitter">
             TW
           </a>
+          <span className="subdued">·</span>
           <a href={instagramLink} aria-label="Instagram">
             IG
           </a>

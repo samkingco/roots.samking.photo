@@ -20,26 +20,26 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   align-items: center;
+  justify-items: flex-start;
   position: sticky;
   top: 0;
   z-index: 1;
-  padding: 2rem var(--edge-padding-h);
-  margin-left: calc(var(--edge-padding-h) * -1);
-  margin-right: calc(var(--edge-padding-h) * -1);
-  background: var(--background);
+  padding: 4rem 0;
 }
 
 .controls,
 .links {
-  width: 100%;
+  width: auto;
   display: grid;
   grid-gap: 0.5rem;
   grid-auto-columns: min-content;
   grid-auto-flow: column;
+  padding: 1rem;
+  margin: -1rem;
+  background: var(--background);
 }
 
 .links {
-  grid-gap: 1rem;
   justify-self: flex-end;
   justify-content: flex-end;
   text-align: right;
