@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useContextualRouting } from "next-use-contextual-routing";
@@ -20,16 +20,57 @@ export function IndexPage() {
   const { returnHref, makeContextualHref } = useContextualRouting();
   const [layout, setLayout] = useState<Layout>(Layout.SCROLL);
   const [modalPhoto, setModalPhoto] = useState<Photo | undefined>();
+  const refs = useRef<Array<HTMLAnchorElement | null>>([]);
+  const photoContainerRef = useRef<HTMLElement | null>(null);
+
+  // Setup refs to photo links
+  useEffect(() => {
+    refs.current = refs.current.slice(0, data.length);
+    return () => {
+      refs.current = [];
+    };
+  }, [data]);
 
   const openSeaLink = "https://opensea.io/samkingco";
   const twitterLink = "https://twitter.com/samkingco";
   const instagramLink = "https://instagram.com/samkingco";
 
   const onModalClose = () => {
+    if (modalPhoto) {
+      const returnToPhotoId = modalPhoto.id;
+      // Scroll to the image and set focus when the modal closes
+      // setTimeout hack because of focus locking in @reach/dialog
+      setTimeout(() => {
+        if (refs.current[returnToPhotoId]) {
+          // @ts-ignore: Object is possibly 'null'.
+          refs.current[returnToPhotoId].scrollIntoView({
+            block: "center",
+            inline: "center",
+          });
+          // @ts-ignore: Object is possibly 'null'.
+          refs.current[returnToPhotoId].focus();
+        }
+      }, 0);
+    }
+
     router.push(returnHref, undefined, {
       scroll: false,
     });
   };
+
+  const scrollToPhotoContainer = () => {
+    if (photoContainerRef.current) {
+      photoContainerRef.current.scrollIntoView(true);
+    }
+  };
+
+  useEffect(() => {
+    const photo = data.find((i) => `${i.id}` === router.query.photo);
+    setModalPhoto(photo);
+    return () => {
+      setModalPhoto(undefined);
+    };
+  }, [router.query.photo]);
 
   return (
     <main>
@@ -76,14 +117,20 @@ export function IndexPage() {
         <div className={styles.controls}>
           <p className="subdued">View:</p>
           <TextButton
-            onClick={() => setLayout(Layout.SCROLL)}
+            onClick={() => {
+              setLayout(Layout.SCROLL);
+              scrollToPhotoContainer();
+            }}
             showUnderline={layout === Layout.SCROLL}
           >
             Default
           </TextButton>
           <p className="subdued">|</p>
           <TextButton
-            onClick={() => setLayout(Layout.GRID)}
+            onClick={() => {
+              setLayout(Layout.GRID);
+              scrollToPhotoContainer();
+            }}
             showUnderline={layout === Layout.GRID}
           >
             Grid
@@ -103,7 +150,10 @@ export function IndexPage() {
         </nav>
       </section>
 
-      <section className={styles.section}>
+      <section
+        className={clsx([styles.section, styles.sectionPhotos])}
+        ref={photoContainerRef}
+      >
         <ol className={styles[`${layout}Layout`]}>
           {data.map((photo) => (
             <li
@@ -118,11 +168,7 @@ export function IndexPage() {
                 as={`/photo/${photo.id}`}
                 scroll={false}
               >
-                <a
-                  onClick={() => {
-                    setModalPhoto(photo);
-                  }}
-                >
+                <a ref={(el) => (refs.current[photo.id] = el)}>
                   <Image
                     src={photo.src}
                     alt={photo.alt || ""}
@@ -141,8 +187,13 @@ export function IndexPage() {
         isOpen={Boolean(!!router.query.photo && modalPhoto)}
         onClose={onModalClose}
       >
-        {/* TODO: Add next and prev links */}
-        {modalPhoto && <PhotoPage photo={modalPhoto} onClose={onModalClose} />}
+        {modalPhoto && (
+          <PhotoPage
+            photo={modalPhoto}
+            onClose={onModalClose}
+            totalPhotos={data.length}
+          />
+        )}
       </Modal>
     </main>
   );

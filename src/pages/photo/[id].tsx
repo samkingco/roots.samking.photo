@@ -7,12 +7,13 @@ interface Params extends ParsedUrlQuery {
   id: string;
 }
 
-export const getStaticProps: GetStaticProps<{ photo: Photo }> = async (
-  context
-) => {
+export const getStaticProps: GetStaticProps<{
+  photo: Photo;
+  totalPhotos: number;
+}> = async (context) => {
   const { id } = context.params as Params;
   const photo = data.find((i) => `${i.id}` === id) as Photo;
-  return { props: { photo } };
+  return { props: { photo, totalPhotos: data.length } };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -26,6 +27,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export default function ID(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
-  const { photo } = props;
-  return <PhotoPage photo={photo} closeHref="/" />;
+  const { photo, totalPhotos } = props;
+  return <PhotoPage photo={photo} closeHref="/" totalPhotos={totalPhotos} />;
 }

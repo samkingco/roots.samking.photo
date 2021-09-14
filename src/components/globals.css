@@ -24,8 +24,15 @@
   --foreground-alpha: 255, 255, 255;
   --subdued: rgb(180 180 180);
   --accent: rgb(245, 42, 42);
-  --edge-padding-h: 4vw;
-  --edge-padding-v: 4em;
+  --edge-padding-h: 2rem;
+  --edge-padding-v: 2rem;
+}
+
+@media (min-width: 36rem) {
+  :root {
+    --edge-padding-h: 4rem;
+    --edge-padding-v: 4rem;
+  }
 }
 
 *,
