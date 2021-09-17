@@ -30,6 +30,10 @@ export function IndexPage() {
       refs.current = [];
     };
   }, [data]);
+  
+  
+  const launchTime = "18:30 GMT"
+  const launchDate = "1st October 2021";
 
   const openSeaLink = "https://opensea.io/samkingco";
   const twitterLink = "https://twitter.com/samkingco";
@@ -95,14 +99,19 @@ export function IndexPage() {
           maximus, faucibus erat at, laoreet nisi.
         </p>
         <hr />
+
+        <h3>Sale details</h3>
         <ul>
           <li>
             <p>Collection of {data.length} unique photographs for sale</p>
           </li>
           <li>
             <p>
-              Launches on <a href={openSeaLink}>OpenSea</a> 10 October 2021
+              Launches on <a href={openSeaLink}>OpenSea</a> at {launchTime}, {launchDate}
             </p>
+          </li>
+          <li>
+            <p>Prices between 0.05-0.15 ETH</p>
           </li>
           <li>
             <p>

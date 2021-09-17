@@ -38,16 +38,6 @@ import photo37 from "@content/photos/37.jpg";
 import photo38 from "@content/photos/38.jpg";
 import photo39 from "@content/photos/39.jpg";
 import photo40 from "@content/photos/40.jpg";
-import photo41 from "@content/photos/41.jpg";
-import photo42 from "@content/photos/42.jpg";
-import photo43 from "@content/photos/43.jpg";
-import photo44 from "@content/photos/44.jpg";
-import photo45 from "@content/photos/45.jpg";
-import photo46 from "@content/photos/46.jpg";
-import photo47 from "@content/photos/47.jpg";
-import photo48 from "@content/photos/48.jpg";
-import photo49 from "@content/photos/49.jpg";
-import photo50 from "@content/photos/50.jpg";
 
 export enum PhotoSize {
   SMALL = "photoSmall",
@@ -71,8 +61,6 @@ export const data: Photo[] = [
     id: 1,
     src: photo1,
     size: PhotoSize.SMALL,
-    description:
-      "Snowy mountain ranges… a long description that probably wraps on multiple lines",
     opensea: `${openseaBaseUrl}`,
   },
   {
@@ -120,13 +108,13 @@ export const data: Photo[] = [
   {
     id: 9,
     src: photo9,
-    size: PhotoSize.MEDIUM,
+    size: PhotoSize.SMALL,
     opensea: `${openseaBaseUrl}`,
   },
   {
     id: 10,
     src: photo10,
-    size: PhotoSize.SMALL,
+    size: PhotoSize.MEDIUM,
     opensea: `${openseaBaseUrl}`,
   },
   {
@@ -150,25 +138,25 @@ export const data: Photo[] = [
   {
     id: 14,
     src: photo14,
-    size: PhotoSize.MEDIUM,
+    size: PhotoSize.SMALL,
     opensea: `${openseaBaseUrl}`,
   },
   {
     id: 15,
     src: photo15,
-    size: PhotoSize.SMALL,
+    size: PhotoSize.MEDIUM,
     opensea: `${openseaBaseUrl}`,
   },
   {
     id: 16,
     src: photo16,
-    size: PhotoSize.SMALL,
+    size: PhotoSize.MEDIUM,
     opensea: `${openseaBaseUrl}`,
   },
   {
     id: 17,
     src: photo17,
-    size: PhotoSize.MEDIUM,
+    size: PhotoSize.SMALL,
     opensea: `${openseaBaseUrl}`,
   },
   {
@@ -306,66 +294,6 @@ export const data: Photo[] = [
   {
     id: 40,
     src: photo40,
-    size: PhotoSize.LARGE,
-    opensea: `${openseaBaseUrl}`,
-  },
-  {
-    id: 41,
-    src: photo41,
-    size: PhotoSize.SMALL,
-    opensea: `${openseaBaseUrl}`,
-  },
-  {
-    id: 42,
-    src: photo42,
-    size: PhotoSize.SMALL,
-    opensea: `${openseaBaseUrl}`,
-  },
-  {
-    id: 43,
-    src: photo43,
-    size: PhotoSize.SMALL,
-    opensea: `${openseaBaseUrl}`,
-  },
-  {
-    id: 44,
-    src: photo44,
-    size: PhotoSize.MEDIUM,
-    opensea: `${openseaBaseUrl}`,
-  },
-  {
-    id: 45,
-    src: photo45,
-    size: PhotoSize.MEDIUM,
-    opensea: `${openseaBaseUrl}`,
-  },
-  {
-    id: 46,
-    src: photo46,
-    size: PhotoSize.SMALL,
-    opensea: `${openseaBaseUrl}`,
-  },
-  {
-    id: 47,
-    src: photo47,
-    size: PhotoSize.LARGE,
-    opensea: `${openseaBaseUrl}`,
-  },
-  {
-    id: 48,
-    src: photo48,
-    size: PhotoSize.MEDIUM,
-    opensea: `${openseaBaseUrl}`,
-  },
-  {
-    id: 49,
-    src: photo49,
-    size: PhotoSize.SMALL,
-    opensea: `${openseaBaseUrl}`,
-  },
-  {
-    id: 50,
-    src: photo50,
     size: PhotoSize.LARGE,
     opensea: `${openseaBaseUrl}`,
   },
