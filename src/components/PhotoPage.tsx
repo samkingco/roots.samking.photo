@@ -27,28 +27,28 @@ export function PhotoPage({ photo, onClose, closeHref, totalPhotos }: Props) {
   const prevId = wrap(1, totalPhotos + 1, photo.id - 1);
   const nextId = wrap(1, totalPhotos + 1, photo.id + 1);
 
-  const downHandler = ({ key }: KeyboardEvent) => {
-    if (["ArrowLeft", "p"].includes(key)) {
-      router.push(makeContextualHref({ photo: prevId }), `/photo/${prevId}`, {
-        scroll: false,
-      });
-    }
-    if (["ArrowRight", "n"].includes(key)) {
-      router.push(makeContextualHref({ photo: nextId }), `/photo/${nextId}`, {
-        scroll: false,
-      });
-    }
-    if (["Escape"].includes(key) && closeHref) {
-      router.push(closeHref);
-    }
-  };
-
   useEffect(() => {
+    const downHandler = ({ key }: KeyboardEvent) => {
+      if (["ArrowLeft", "p"].includes(key)) {
+        router.push(makeContextualHref({ photo: prevId }), `/photo/${prevId}`, {
+          scroll: false,
+        });
+      }
+      if (["ArrowRight", "n"].includes(key)) {
+        router.push(makeContextualHref({ photo: nextId }), `/photo/${nextId}`, {
+          scroll: false,
+        });
+      }
+      if (["Escape"].includes(key) && closeHref) {
+        router.push(closeHref);
+      }
+    };
+
     window.addEventListener("keydown", downHandler);
     return () => {
       window.removeEventListener("keydown", downHandler);
     };
-  }, [prevId, nextId, downHandler]);
+  }, [prevId, nextId, closeHref, makeContextualHref, router]);
 
   let closeContent = null;
 
