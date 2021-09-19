@@ -89,18 +89,19 @@ export function IndexPage() {
         </h3>
         <p className="sans">
           It&apos;s hard to fully describe the feeling I get when I visit
-          Scotland and the Highlands specifically. There&apos;s always a natural
-          pull for me to spend time there, just being outdoors. I have family
-          roots there so it feels strangely homely even though I&apos;ve never
-          lived in Scotland. I don&apos;t know much about my heritage other than
-          I have a couple of distant relatives still in the Orkney Islands. My
-          Nan has told me stories of her family catching lobsters and storing
-          them in the basement, and shown me old photographs of days where there
-          was no wind and the washing on the line was hanging vertically—a
-          normal sight for most people, but a novelty for those on Orkney. The
-          Scottish are hardy, a trait I don&apos;t think I have. I&apos;ve grown
-          up in the south with warm weather and creature comforts, something you
-          don&apos;t get very often in the depths of the Highlands.
+          Scotland and the Highlands. There&apos;s always a natural pull for me
+          to spend time there, just being outdoors. I have family roots there so
+          it feels strangely homely even though I&apos;ve never lived in
+          Scotland. I don&apos;t know much about my heritage other than I have a
+          couple of distant relatives still in the Orkney Islands. My Nan has
+          told me stories of her family catching lobsters and storing them in
+          the basement, and shown me old photographs of days where there was no
+          wind and the washing on the line was hanging vertically—a normal sight
+          for most people, but a novelty for those on Orkney. The Scottish are a
+          hardy people, a trait I don&apos;t think I have. I&apos;ve grown up in
+          the South of England with warm weather and creature comforts,
+          something you don&apos;t get very often in the depths of the
+          Highlands.
         </p>
         {!showExcerpt && (
           <TextButton
@@ -113,9 +114,8 @@ export function IndexPage() {
         <VisuallyHidden isHidden={!showExcerpt}>
           <p className="sans">
             Being in the Higlands gives me a sense of wonder that these are the
-            lands my ancestors once travelled through, althought I&apos;m unsure
-            if they were Vikings or Celtic tribes. The effect is calming but
-            also strangely primal, a subtle undertone of anxiousness. Similar to
+            lands my ancestors once travelled through. The effect is calming but
+            also strangely primal, a subtle undertone of anxiousness, similar to
             how my ancestors must have felt looking for food or shelter. A
             feeling of comfort and discomfort at the same time. This is only
             compounded by the dense fog that rolls in over the mountains,
