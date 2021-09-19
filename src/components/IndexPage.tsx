@@ -33,7 +33,7 @@ export function IndexPage() {
     };
   }, []);
 
-  const openSeaLink = "https://opensea.io/samkingco";
+  const openSeaLink = "https://opensea.io/collection/roots-by-sam-king";
   const twitterLink = "https://twitter.com/samkingco";
   const instagramLink = "https://instagram.com/samkingco";
 
