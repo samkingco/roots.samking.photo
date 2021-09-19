@@ -139,11 +139,17 @@ export function IndexPage() {
             <p>Collection of {data.length} unique photographs for sale</p>
           </li>
           <li>
+            <p>
+              Available to buy on <a href={openSeaLink}>OpenSea</a> soon
+            </p>
+          </li>
+          <li>
             <p>Initial price of 0.1 ETH each</p>
           </li>
           <li>
             <p>
-              Purchase on <a href={openSeaLink}>OpenSea</a>
+              Follow <a href={twitterLink}>Twitter</a> or{" "}
+              <a href={instagramLink}>Instagram</a> for updates
             </p>
           </li>
         </ul>
