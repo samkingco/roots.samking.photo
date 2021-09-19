@@ -6,7 +6,7 @@ export function App({ Component, pageProps }: AppProps) {
   const title = "Roots by Sam King";
   const description =
     "A collection of 40 photographs exploring my roots in the Scottish Highlands. Available to purchase on OpenSea.";
-  const url = "https://roots.samking.co";
+  const url = "https://roots.samking.photo";
   const socialImage = `${url}/social.jpg`;
 
   return (
