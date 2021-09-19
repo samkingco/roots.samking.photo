@@ -113,8 +113,8 @@ export function IndexPage() {
         )}
         <VisuallyHidden isHidden={!showExcerpt}>
           <p className="sans">
-            Being in the Higlands gives me a sense of wonder that these are the
-            lands my ancestors once travelled through. The effect is calming but
+            Being in the Highlands gives me a sense of wonder that these are the
+            lands my ancestors once traveled through. The effect is calming but
             also strangely primal, a subtle undertone of anxiousness, similar to
             how my ancestors must have felt looking for food or shelter. A
             feeling of comfort and discomfort at the same time. This is only
