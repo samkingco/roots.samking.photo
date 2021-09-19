@@ -16,6 +16,10 @@
   padding-bottom: 2rem;
 }
 
+.readMoreButton {
+  margin-top: 1rem;
+}
+
 .sectionControls {
   display: grid;
   grid-template-columns: 2fr 1fr;

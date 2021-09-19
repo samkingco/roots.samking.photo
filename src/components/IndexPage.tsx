@@ -9,6 +9,7 @@ import { Modal } from "@components/Modal";
 import { PhotoPage } from "@components/PhotoPage";
 import { TextButton } from "@components/TextButton";
 import styles from "@components/IndexPage.module.css";
+import { VisuallyHidden } from "./VisuallyHidden";
 
 enum Layout {
   SCROLL = "scroll",
@@ -22,6 +23,7 @@ export function IndexPage() {
   const [modalPhoto, setModalPhoto] = useState<Photo | undefined>();
   const refs = useRef<Array<HTMLAnchorElement | null>>([]);
   const photoContainerRef = useRef<HTMLElement | null>(null);
+  const [showExcerpt, setShowExcerpt] = useState(false);
 
   // Setup refs to photo links
   useEffect(() => {
@@ -30,9 +32,8 @@ export function IndexPage() {
       refs.current = [];
     };
   }, [data]);
-  
-  
-  const launchTime = "18:30 GMT"
+
+  const launchTime = "18:30 GMT";
   const launchDate = "1st October 2021";
 
   const openSeaLink = "https://opensea.io/samkingco";
@@ -89,15 +90,49 @@ export function IndexPage() {
         <h3 className="subdued">
           By <a href="https://samking.photo">Sam King</a>
         </h3>
-        <p>
-          Praesent sed auctor tortor. Vivamus ac placerat est, eu varius metus.
-          Proin egestas massa ut nisi faucibus condimentum. Quisque posuere orci
-          nec nulla pellentesque, vel pretium urna dignissim. Maecenas dictum
-          vel turpis vitae vulputate. Fusce venenatis vulputate eros, in
-          imperdiet neque. Donec urna ante, condimentum quis pharetra ut,
-          tristique vel neque. Cras sit amet tincidunt metus. Phasellus a quam
-          maximus, faucibus erat at, laoreet nisi.
+        <p className="sans">
+          It's hard to fully describe the feeling I get when I visit Scotland
+          and the Highlands specifically. There's always a natural pull for me
+          to spend time there, just being outdoors. I have family roots there so
+          it feels strangely homely even though I've never lived in Scotland. I
+          don't know much about my heritage other than I have a couple of
+          distant relatives still in the Orkney Islands. My Nan has told me
+          stories of her family catching lobsters and storing them in the
+          basement, and shown me old photographs of days where there was no wind
+          and the washing on the line was hanging vertically—a normal sight for
+          most people, but a novelty for those on Orkney. The Scottish are
+          hardy, a trait I don't think I have. I've grown up in the south with
+          warm weather and creature comforts, something you don't get very often
+          in the depths of the Highlands.
         </p>
+        {!showExcerpt && (
+          <TextButton
+            className={styles.readMoreButton}
+            onClick={() => setShowExcerpt(true)}
+          >
+            Read full excerpt
+          </TextButton>
+        )}
+        <VisuallyHidden isHidden={!showExcerpt}>
+          <p className="sans">
+            Being in the Higlands gives me a sense of wonder that these are the
+            lands my ancestors once travelled through, althought I'm unsure if
+            they were Vikings or Celtic tribes. The effect is calming but also
+            strangely primal, a subtle undertone of anxiousness. Similar to how
+            my ancestors must have felt looking for food or shelter. A feeling
+            of comfort and discomfort at the same time. This is only compounded
+            by the dense fog that rolls in over the mountains, suffocating the
+            landscape. Your vision being impaired only heightens the anxious
+            feeling. When it clears though, there's a wave of relief and the air
+            feels crisp, filled with the smell of pines and firs.
+          </p>
+          <p className="sans">
+            The following images try to capture that feeling while showing the
+            rugged beauty of this amazing landscape. Being both in awe and
+            swarmed by the mountains and fog. An inviting yet hostile place.
+          </p>
+        </VisuallyHidden>
+
         <hr />
 
         <h3>Sale details</h3>
@@ -106,17 +141,11 @@ export function IndexPage() {
             <p>Collection of {data.length} unique photographs for sale</p>
           </li>
           <li>
-            <p>
-              Launches on <a href={openSeaLink}>OpenSea</a> at {launchTime}, {launchDate}
-            </p>
-          </li>
-          <li>
-            <p>Prices between 0.05-0.15 ETH</p>
+            <p>Initial price of 0.1 ETH each</p>
           </li>
           <li>
             <p>
-              <a href={twitterLink}>Twitter</a> and{" "}
-              <a href={instagramLink}>Instagram</a> for updates
+              Purchase on <a href={openSeaLink}>OpenSea</a>
             </p>
           </li>
         </ul>
