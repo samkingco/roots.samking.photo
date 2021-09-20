@@ -140,7 +140,7 @@ export function IndexPage() {
           </li>
           <li>
             <p>
-              Available to buy on <a href={openSeaLink}>OpenSea</a> soon
+              Available to buy on <a href={openSeaLink}>OpenSea</a>
             </p>
           </li>
           <li>
