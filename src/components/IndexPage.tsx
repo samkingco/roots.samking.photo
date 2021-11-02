@@ -139,9 +139,7 @@ export function IndexPage() {
             <p>Collection of {data.length} unique photographs for sale</p>
           </li>
           <li>
-            <p>
-              Available to buy on <a href={openSeaLink}>OpenSea</a>
-            </p>
+            <p>Available to buy soon</p>
           </li>
           <li>
             <p>Initial price of 0.1 ETH each</p>
@@ -180,10 +178,6 @@ export function IndexPage() {
         </div>
 
         <nav className={styles.links}>
-          <a href={openSeaLink} aria-label="OpenSea">
-            OS
-          </a>
-          <span className="subdued">·</span>
           <a href={twitterLink} aria-label="Twitter">
             TW
           </a>

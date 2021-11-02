@@ -73,13 +73,10 @@ export function PhotoPage({ photo, onClose, closeHref, totalPhotos }: Props) {
         <div>
           <nav className={styles.nav}>
             {closeContent}
-            <Link href={photo.opensea}>
-              <a>View on OpenSea</a>
-            </Link>
+            <p>
+              {photo.id}.{photo.description ? ` ${photo.description}` : ""}
+            </p>
           </nav>
-          <p>
-            {photo.id}.{photo.description ? ` ${photo.description}` : ""}
-          </p>
         </div>
         <Image
           className={styles.image}

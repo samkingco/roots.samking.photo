@@ -13,11 +13,11 @@
   display: flex;
   justify-content: space-between;
   flex-direction: row-reverse;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .pagination {
   display: flex;
   justify-content: space-between;
-  /* margin-top: 2rem; */
+  margin-top: 1rem;
 }
