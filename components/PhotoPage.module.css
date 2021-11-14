@@ -1,0 +1,97 @@
+.page {
+  padding: 2rem;
+  height: 100%;
+  display: grid;
+  grid-template-areas:
+    "title close"
+    "image image"
+    "cta cta"
+    "pagination pagination";
+  grid-template-columns: 1fr max-content;
+  grid-template-rows: max-content 1fr max-content max-content;
+  grid-gap: 1rem;
+}
+
+.image {
+  grid-area: image;
+  margin-bottom: 1rem;
+}
+
+.cta {
+  grid-area: cta;
+  margin-bottom: 1rem;
+}
+
+.cta button {
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem;
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.cta button:hover {
+  color: var(--foreground);
+  background: var(--accent);
+  text-decoration: none;
+}
+
+.cta button:focus-visible {
+  color: var(--foreground);
+  background: var(--accent);
+  text-decoration: none;
+  outline: none;
+}
+
+.cta button:focus-visible:hover {
+  color: var(--background);
+  background: var(--foreground);
+}
+
+.pagination {
+  grid-area: pagination;
+  display: flex;
+  justify-content: space-between;
+}
+
+.paginationSeparator {
+  display: none;
+}
+
+.page p {
+  max-width: 40rem;
+}
+
+.rightCol,
+.pagination {
+  text-align: right;
+}
+
+@media (min-width: 32rem) {
+  .page {
+    grid-template-areas:
+      "title close"
+      "image image"
+      "cta pagination";
+    grid-template-rows: max-content 1fr max-content;
+  }
+
+  .cta {
+    margin-bottom: 0;
+  }
+
+  .cta button {
+    width: auto;
+    margin: -0.25rem 0;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .pagination {
+    display: inline-block;
+  }
+
+  .paginationSeparator {
+    display: inline-block;
+    margin: 0 0.25rem;
+  }
+}
