@@ -1,0 +1,238 @@
+@font-face {
+  font-family: "Mono";
+  font-display: fallback;
+  src: url("fonts/Mono.woff") format("woff"),
+    url("fonts/Mono.woff2") format("woff2");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Text";
+  font-display: fallback;
+  src: url("fonts/Text.woff") format("woff"),
+    url("fonts/Text.woff2") format("woff2");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Nikolai";
+  font-display: fallback;
+  src: url("fonts/Nikolai.woff") format("woff"),
+    url("fonts/Nikolai.woff2") format("woff2");
+  font-style: normal;
+  font-weight: bold;
+}
+
+:root {
+  --reach-dialog: 1;
+  --background: rgb(0, 0, 0);
+  --background-alpha: 0, 0, 0;
+  --foreground: rgb(255, 255, 255);
+  --foreground-alpha: 255, 255, 255;
+  --subdued: rgb(180 180 180);
+  --accent: rgb(22, 56, 50);
+  --edge-padding-h: 1rem;
+  --edge-padding-v: 2rem;
+
+  --font-mono: "Mono", SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono,
+    monospace;
+  --font-sans: "Text", system, -apple-system, "Helvetica Neue", Helvetica,
+    "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Nikolai", seri;
+}
+
+@media (min-width: 36rem) {
+  :root {
+    --edge-padding-h: 4rem;
+    --edge-padding-v: 4rem;
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+body > div:first-child,
+div#__next {
+  height: 100%;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--foreground);
+  background-color: var(--background);
+  cursor: crosshair;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--foreground);
+}
+
+h1,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h3 {
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 2em;
+  font-family: var(--font-heading);
+  background: var(--accent);
+  padding: 0 0.4em;
+  width: auto;
+  display: inline-block;
+}
+
+h1::selection {
+  background: var(--foreground);
+}
+
+h3 {
+  font-size: 1em;
+}
+
+h1 + p,
+h1 + h3,
+h3 + ul,
+p + p {
+  margin-top: 0.5rem;
+}
+
+h3 + p {
+  margin-top: 1rem;
+}
+
+ul {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+hr {
+  width: 100%;
+  max-width: 4rem;
+  height: 1px;
+  margin: 2rem 0;
+  border: none;
+  background: rgba(var(--foreground-alpha), 0.1);
+}
+
+.link {
+  color: inherit;
+  text-decoration: underline;
+  cursor: inherit;
+}
+
+.link:hover {
+  color: var(--background);
+  background: var(--foreground);
+  box-shadow: 0 0 0 4px var(--foreground);
+  text-decoration: none;
+}
+
+.link:focus {
+  outline: none;
+}
+
+.link:focus-visible {
+  color: var(--foreground);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent);
+  text-decoration: none;
+  outline: none;
+}
+
+.link:focus-visible:hover {
+  color: var(--background);
+  background: var(--foreground);
+  box-shadow: 0 0 0 4px var(--foreground);
+}
+
+/* Button reset */
+button {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.5;
+  overflow: visible;
+  text-transform: none;
+  border: none;
+  cursor: inherit;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+.subdued {
+  color: var(--subdued);
+}
+
+.sans {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+}
+
+.loadingText:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  animation: ellipsis steps(4, end) 900ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0;
+}
+
+#walletconnect-wrapper {
+  color: rgba(60, 66, 82, 0.6);
+}
+
+@keyframes ellipsis {
+  to {
+    width: 0.8em;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: rgb(255, 255, 255);
+    --background-alpha: 255, 255, 255;
+    --foreground: rgb(0, 0, 0);
+    --foreground-alpha: 0, 0, 0;
+    --subdued: rgb(88 88 88);
+  }
+
+  ::selection {
+    color: var(--background);
+  }
+
+  h1 {
+    color: var(--background);
+  }
+
+  .link:focus-visible {
+    color: var(--background);
+  }
+}
