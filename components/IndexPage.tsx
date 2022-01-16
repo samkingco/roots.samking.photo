@@ -26,7 +26,7 @@ export function IndexPage() {
   const refs = useRef<Array<HTMLAnchorElement | null>>([]);
   const photoContainerRef = useRef<HTMLElement | null>(null);
   const [showExcerpt, setShowExcerpt] = useState(false);
-  const { mintPrice, mintedTokenIds } = useMint();
+  const { mintPrice } = useMint();
 
   // Setup refs to photo links
   useEffect(() => {
@@ -37,6 +37,7 @@ export function IndexPage() {
   }, []);
 
   const openSeaLink = "https://opensea.io/collection/roots-by-sam-king";
+  const contractLink = `https://etherscan.io/address/${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`;
   const twitterLink = "https://twitter.com/samkingco";
   const instagramLink = "https://instagram.com/samkingco";
 
@@ -88,7 +89,7 @@ export function IndexPage() {
       >
         <h1>Roots</h1>
         <h3 className="subdued">
-          By{" "}
+          Photography NFT collection by{" "}
           <a className="link" href="https://samking.photo">
             Sam King
           </a>
@@ -136,6 +137,26 @@ export function IndexPage() {
             swarmed by the mountains and fog. An inviting yet hostile place.
           </p>
         </VisuallyHidden>
+
+        <hr />
+
+        <h3>About the NFTs</h3>
+        <ul>
+          <li>40 photos, no editions, {getPriceText(mintPrice)} each</li>
+          <li>Each photo is an ERC721 token with data on Arweave</li>
+          <li>
+            Aperture, exposure, ISO, and focal length are included as attributes
+          </li>
+          <li>
+            <a
+              className="link"
+              href={contractLink}
+              aria-label="View contract on Etherscan"
+            >
+              View contract
+            </a>
+          </li>
+        </ul>
       </section>
 
       <section className={clsx(styles.section, styles.sectionControls)}>
@@ -199,16 +220,7 @@ export function IndexPage() {
                   <Image src={photo.src} alt="" layout="responsive" />
                 </a>
               </Link>
-              <p>
-                #{photo.tokenId}
-                <span className="subdued"> · </span>
-                {getPriceText(
-                  mintedTokenIds
-                    ? mintedTokenIds.includes(photo.tokenId)
-                    : false,
-                  mintPrice
-                )}
-              </p>
+              <p>#{photo.tokenId}</p>
             </li>
           ))}
         </ol>

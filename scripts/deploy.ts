@@ -7,7 +7,7 @@ async function main() {
   const Roots = await ethers.getContractFactory("Roots");
   if (process.env.BASE_TOKEN_URI) {
     const roots = await Roots.deploy(process.env.BASE_TOKEN_URI, {
-      gasLimit: ethers.BigNumber.from(1900000),
+      gasLimit: ethers.BigNumber.from(1720000),
     });
     console.log("Roots deployed to:", roots.address);
   } else {

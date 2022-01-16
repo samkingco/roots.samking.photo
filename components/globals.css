@@ -150,6 +150,10 @@ hr {
 }
 
 .link:focus {
+  outline: none;
+}
+
+.link:focus-visible {
   color: var(--foreground);
   background: var(--accent);
   box-shadow: 0 0 0 4px var(--accent);
@@ -157,7 +161,7 @@ hr {
   outline: none;
 }
 
-.link:focus:hover {
+.link:focus-visible:hover {
   color: var(--background);
   background: var(--foreground);
   box-shadow: 0 0 0 4px var(--foreground);
@@ -228,7 +232,7 @@ button,
     color: var(--background);
   }
 
-  .link:focus {
-    color: var(--foreground);
+  .link:focus-visible {
+    color: var(--background);
   }
 }

@@ -5,8 +5,6 @@ import { Roots, Roots__factory } from "../typechain";
 
 export interface MintManagerState {
   mintPrice: BigNumber | null;
-  mintedTokenIds: number[] | null;
-  refreshMintedTokenIds: () => void;
   writeableContract: Roots | null;
   readonlyContract: Roots;
 }
@@ -28,11 +26,8 @@ export default function MintManager({ children }: { children: any }) {
 
   const [mintPrice, setMintPrice] =
     useState<MintManagerState["mintPrice"]>(null);
-  const [mintedTokenIds, setMintedTokenIds] =
-    useState<MintManagerState["mintedTokenIds"]>(null);
   const [writeableContract, setWriteableContract] =
     useState<MintManagerState["writeableContract"]>(null);
-  const [lastCheckedMintedIds, setLastCheckedMintedIds] = useState(Date.now());
 
   // Get the mint price
   useEffect(() => {
@@ -42,24 +37,6 @@ export default function MintManager({ children }: { children: any }) {
     }
     getPrice();
   }, []);
-
-  // Get a list of minted tokens
-  useEffect(() => {
-    async function checkAlreadyMinted() {
-      try {
-        const result = await readonlyContract.getMintedTokenIds();
-        const mintedTokenIds = result.map((i) => i.toNumber());
-        setMintedTokenIds(mintedTokenIds);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    checkAlreadyMinted();
-  }, [lastCheckedMintedIds]);
-
-  function refreshMintedTokenIds() {
-    setLastCheckedMintedIds(Date.now());
-  }
 
   // Set up a writeable contract
   useEffect(() => {
@@ -79,8 +56,6 @@ export default function MintManager({ children }: { children: any }) {
     <MintManagerContext.Provider
       value={{
         mintPrice,
-        mintedTokenIds,
-        refreshMintedTokenIds,
         writeableContract,
         readonlyContract,
       }}

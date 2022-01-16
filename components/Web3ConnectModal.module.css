@@ -36,3 +36,10 @@
   width: 1rem;
   margin-right: 0.5rem;
 }
+
+@media (prefers-color-scheme: light) {
+  .connectButton:hover,
+  .connectButton:focus-visible {
+    color: var(--background);
+  }
+}

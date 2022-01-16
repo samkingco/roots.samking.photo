@@ -5,7 +5,7 @@ import { ethers } from "hardhat";
 
 const baseTokenURI = process.env.BASE_TOKEN_URI || "";
 
-describe("Quilts contract", () => {
+describe("Roots contract", () => {
   let roots: Contract;
   let owner: SignerWithAddress;
   let addr1: SignerWithAddress;
@@ -31,7 +31,7 @@ describe("Quilts contract", () => {
     it("should mint a photo", async () => {
       const price = await roots.price();
       const tokenId = 20;
-      expect(await roots.connect(addr1).mintForSelf(tokenId, { value: price }))
+      expect(await roots.connect(addr1).mint(tokenId, { value: price }))
         .to.emit(roots, "Transfer")
         .withArgs(ethers.constants.AddressZero, addr1.address, tokenId);
       expect(await roots.balanceOf(addr1.address)).to.equal(1);
@@ -40,27 +40,13 @@ describe("Quilts contract", () => {
       );
     });
 
-    it("should allow someone to mint a photo for a friend", async () => {
-      const price = await roots.price();
-      const tokenId = 10;
-      expect(
-        await roots.mintForFriend(tokenId, addr1.address, { value: price })
-      )
-        .to.emit(roots, "Transfer")
-        .withArgs(ethers.constants.AddressZero, addr1.address, tokenId);
-      expect(await roots.balanceOf(owner.address)).to.equal(0);
-      expect(await roots.balanceOf(addr1.address)).to.equal(1);
-    });
-
     it("should not load tokens that have not been minted", async () => {
       // Token 5 has not been minted yet so should fail
-      expect(roots.tokenURI(5)).to.be.revertedWith(
-        "ERC721Metadata: URI query for nonexistent token"
-      );
+      expect(roots.tokenURI(5)).to.be.revertedWith("InvalidTokenId()");
 
       // Mint token 5
       const price = await roots.price();
-      expect(await roots.connect(addr1).mintForSelf(5, { value: price }))
+      expect(await roots.connect(addr1).mint(5, { value: price }))
         .to.emit(roots, "Transfer")
         .withArgs(ethers.constants.AddressZero, addr1.address, 5);
 
@@ -68,51 +54,31 @@ describe("Quilts contract", () => {
       expect(await roots.tokenURI(5)).to.equal(`${baseTokenURI}5`);
 
       // Getting token 6 should fail
-      expect(roots.tokenURI(6)).to.be.revertedWith(
-        "ERC721Metadata: URI query for nonexistent token"
-      );
+      expect(roots.tokenURI(6)).to.be.revertedWith("InvalidTokenId()");
     });
 
     it("should fail when the mint price is incorrect", async () => {
       const price = await roots.price();
       expect(
-        roots.connect(addr1).mintForSelf(1, { value: price.mul(2) })
-      ).to.be.revertedWith("ETH amount is incorrect");
+        roots.connect(addr1).mint(1, { value: price.mul(2) })
+      ).to.be.revertedWith("IncorrectPaymentAmount()");
       expect(await roots.balanceOf(addr1.address)).to.equal(0);
     });
   });
 
   describe("TokenURI", () => {
     it("should fail when trying to get out of bounds token data", async () => {
-      expect(roots.tokenURI(41)).to.be.revertedWith(
-        "ERC721Metadata: URI query for nonexistent token"
-      );
-      expect(roots.tokenURI(0)).to.be.revertedWith(
-        "ERC721Metadata: URI query for nonexistent token"
-      );
+      expect(roots.tokenURI(41)).to.be.revertedWith("InvalidTokenId()");
+      expect(roots.tokenURI(0)).to.be.revertedWith("InvalidTokenId()");
     });
   });
-
-  // describe("Pauseable", () => {
-  //   it("should pause all transfers", async () => {
-  //     // Verify we can transfer/mint like normal
-  //     // Pause
-  //     // Verify we can no longer transfer/mint
-  //   });
-  //   it("should unpause all transfers", async () => {
-  //     // Pause
-  //     // Verify we can no longer transfer/mint
-  //     // Unpause
-  //     // Verify we can transfer/mint like normal
-  //   });
-  // });
 
   describe("Transfers", () => {
     it("should transfer tokens between accounts", async () => {
       const price = await roots.price();
 
       // Mint token to owner
-      await roots.mintForSelf(10, { value: price });
+      await roots.mint(10, { value: price });
       expect(await roots.balanceOf(owner.address)).to.equal(1);
 
       // Transfer some tokens
@@ -127,7 +93,7 @@ describe("Quilts contract", () => {
       const price = await roots.price();
 
       // Mint token to addr1
-      await roots.connect(addr1).mintForSelf(10, { value: price });
+      await roots.connect(addr1).mint(10, { value: price });
 
       // Owner withdraws
       expect(

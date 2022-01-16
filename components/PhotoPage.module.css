@@ -48,6 +48,13 @@
   background: var(--foreground);
 }
 
+@media (prefers-color-scheme: light) {
+  .cta button:focus-visible,
+  .cta button:hover {
+    color: var(--background);
+  }
+}
+
 .pagination {
   grid-area: pagination;
   display: flex;

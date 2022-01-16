@@ -1,6 +1,5 @@
 import { createContext, useCallback, useState } from "react";
 import Web3ConnectModal from "components/Web3ConnectModal";
-import MintModal from "components/MintModal";
 import { Modal } from "components/Modal";
 
 export enum ModalType {
