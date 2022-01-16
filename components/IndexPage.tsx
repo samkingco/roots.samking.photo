@@ -184,10 +184,10 @@ export function IndexPage() {
         </div>
 
         <nav className={styles.links}>
-          <a className="link" href={openSeaLink} aria-label="OpenSea">
+          {/* <a className="link" href={openSeaLink} aria-label="OpenSea">
             OS
           </a>
-          <span className="subdued">·</span>
+          <span className="subdued">·</span> */}
           <a className="link" href={twitterLink} aria-label="Twitter">
             TW
           </a>
