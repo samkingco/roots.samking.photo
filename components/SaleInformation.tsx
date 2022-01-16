@@ -44,8 +44,6 @@ export default function SaleInformation({ tokenId }: Props) {
   );
   const alreadyMinted = mintingState === MintingState.ALREADY_MINTED;
 
-  console.log(mintingState);
-
   // Set state of minting
   useEffect(() => {
     async function doWork() {
