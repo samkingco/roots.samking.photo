@@ -5,7 +5,7 @@ import styles from "components/App.module.css";
 export function App({ Component, pageProps }: AppProps) {
   const title = "Roots by Sam King";
   const description =
-    "A collection of 40 photographs exploring my roots in the Scottish Highlands. Available to purchase on OpenSea.";
+    "A collection of 40 photographs exploring my roots in the Scottish Highlands. Available to mint now.";
   const url = "https://roots.samking.photo";
   const socialImage = `${url}/social.jpg`;
 
