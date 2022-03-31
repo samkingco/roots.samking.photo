@@ -1,7 +1,7 @@
-import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
-import { ParsedUrlQuery } from "querystring";
-import { data, Photo } from "data-site/index";
 import { PhotoPage } from "components/PhotoPage";
+import { content, Photo } from "data-site/index";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import { ParsedUrlQuery } from "querystring";
 
 interface Params extends ParsedUrlQuery {
   id: string;
@@ -12,12 +12,12 @@ export const getStaticProps: GetStaticProps<{
   totalPhotos: number;
 }> = async (context) => {
   const { id } = context.params as Params;
-  const photo = data.find((i) => `${i.tokenId}` === id) as Photo;
-  return { props: { photo, totalPhotos: data.length } };
+  const photo = content.find((i) => `${i.tokenId}` === id) as Photo;
+  return { props: { photo, totalPhotos: content.length } };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = data.map((photo) => ({
+  const paths = content.map((photo) => ({
     params: { id: `${photo.tokenId}` },
   }));
 

@@ -1,5 +1,5 @@
 .overlay[data-reach-dialog-overlay] {
-  z-index: 1000;
+  z-index: 10;
   min-height: 100vh;
   min-height: -webkit-fill-available;
   background: var(--background);

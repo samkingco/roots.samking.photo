@@ -1,6 +1,6 @@
+import exifr from "exifr";
 import fs from "fs";
 import path from "path";
-import exifr from "exifr";
 
 interface Attribute {
   trait_type: string;
@@ -17,14 +17,14 @@ interface Metadata {
 
 async function main() {
   const tokens: Record<string, Metadata> = {};
-  const files = fs.readdirSync(path.join(process.cwd(), "token-data/images"));
+  const files = fs.readdirSync(path.join(process.cwd(), "data-tokens/images"));
 
   for (const file of files) {
     const ext = path.extname(file);
     if (ext === ".jpg") {
       const tokenId = file.replace(ext, "");
       const exif = await exifr.parse(
-        path.join(process.cwd(), `token-data/images/${file}`)
+        path.join(process.cwd(), `data-tokens/images/${file}`)
       );
 
       tokens[tokenId] = {
@@ -45,7 +45,7 @@ async function main() {
 
   for (const [tokenId, metadata] of Object.entries(tokens)) {
     fs.writeFileSync(
-      path.join(process.cwd(), `token-data/metadata/${tokenId}`),
+      path.join(process.cwd(), `data-tokens/metadata/${tokenId}`),
       JSON.stringify(metadata)
     );
   }

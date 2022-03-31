@@ -81,36 +81,19 @@
 .photoWrapper {
   height: fit-content;
   display: grid;
-  grid-gap: 0.5rem;
+  grid-gap: 0.75rem;
   width: 100%;
   max-width: 90vh;
-}
-
-.photoWrapper p:not(:hover) {
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.info {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-gap: 0.5rem;
-}
-
-.info p {
-  margin: 0;
 }
 
 .scrollLayout .photoSmall {
   align-self: flex-start;
   margin: 0 auto;
-  padding: 0 32vw 0 12vw;
+  padding: 0 16vw 0 8vw;
 }
 
 .scrollLayout .photoSmall:nth-child(even) {
-  padding: 0 12vw 0 32vw;
+  padding: 0 8vw 0 16vw;
 }
 
 .scrollLayout .photoMedium {
@@ -121,6 +104,16 @@
 
 .scrollLayout .photoMedium:nth-child(even) {
   padding: 0 8vw 0 0;
+}
+
+@media (min-width: 30rem) {
+  .scrollLayout .photoSmall {
+    padding: 0 32vw 0 12vw;
+  }
+
+  .scrollLayout .photoSmall:nth-child(even) {
+    padding: 0 12vw 0 32vw;
+  }
 }
 
 @media (min-width: 36rem) {
@@ -134,17 +127,17 @@
 
   .scrollLayout .photoSmall,
   .scrollLayout .photoSmall:nth-child(even) {
-    padding: 0 8vw;
+    padding: 0 6vw;
   }
 
   .scrollLayout .photoSmall:nth-child(3n + 1) {
     align-self: center;
-    padding: 0 12vw 0 4vw;
+    padding: 0 8vw 0 4vw;
   }
 
   .scrollLayout .photoSmall:nth-child(3n + 2) {
     align-self: flex-end;
-    padding: 0 4vw 0 12vw;
+    padding: 0 4vw 0 8vw;
   }
 
   .scrollLayout .photoMedium,
@@ -173,5 +166,15 @@
 
   .sectionPhotos {
     padding-top: 6rem;
+  }
+}
+
+@media (min-width: 48rem) {
+  .scrollLayout .photoSmall:nth-child(3n + 1) {
+    padding: 0 12vw 0 4vw;
+  }
+
+  .scrollLayout .photoSmall:nth-child(3n + 2) {
+    padding: 0 4vw 0 12vw;
   }
 }

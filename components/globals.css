@@ -187,6 +187,40 @@ button,
   -webkit-appearance: button;
 }
 
+button {
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem;
+  color: var(--foreground);
+  background: var(--accent);
+}
+
+button:hover {
+  background: var(--foreground);
+  color: var(--background);
+  text-decoration: none;
+}
+
+button:focus-visible {
+  background: var(--foreground);
+  color: var(--background);
+  text-decoration: none;
+  outline: none;
+}
+
+button:focus-visible:hover {
+  color: var(--background);
+  background: var(--foreground);
+}
+
+@media (min-width: 32rem) {
+  button {
+    width: auto;
+    padding: 0.25rem 0.5rem;
+    margin: -0.25rem 0;
+  }
+}
+
 .subdued {
   color: var(--subdued);
 }
@@ -205,8 +239,11 @@ button,
   width: 0;
 }
 
-#walletconnect-wrapper {
-  color: rgba(60, 66, 82, 0.6);
+.web3modal-modal-lightbox {
+  z-index: 50 !important;
+  background: rgba(0, 0, 0, 0.92) !important;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
 @keyframes ellipsis {
@@ -233,6 +270,11 @@ button,
   }
 
   .link:focus-visible {
+    color: var(--background);
+  }
+
+  button:focus-visible,
+  button:hover {
     color: var(--background);
   }
 }

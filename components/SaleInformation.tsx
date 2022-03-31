@@ -1,162 +1,92 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useModal } from "hooks/useModal";
-import { useWeb3 } from "hooks/useWeb3";
-import { useMint } from "hooks/useMint";
-import { getPriceText } from "utils/price";
-import { ModalType } from "providers/ModalManager";
-import { getFriendlyAddress } from "utils/addresses";
-import { Roots } from "typechain";
+import { BigNumber, ethers } from "ethers";
+import { useContract } from "hooks/useContract";
+import { useENS } from "hooks/useENS";
+import { State, usePurchase } from "hooks/usePurchase";
+import { TextButton } from "./TextButton";
 
 interface Props {
   tokenId: number;
+  owner?: string;
+  isCheckingOwner?: boolean;
+  purchasePrice: BigNumber;
+  refreshQuery?: () => void;
+  showConnectButtonText?: boolean;
 }
 
-enum MintingState {
-  NOT_READY = "NOT_READY",
-  NOT_CONNECTED = "NOT_CONNECTED",
-  ALREADY_MINTED = "ALREADY_MINTED",
-  READY = "READY",
-  WAITING = "WAITING",
-  ERROR = "ERROR",
-  BROADCASTED = "BROADCASTED",
-  CONFIRMED = "CONFIRMED",
-}
+export default function SaleInformation({
+  tokenId,
+  owner,
+  isCheckingOwner,
+  purchasePrice,
+  refreshQuery,
+  showConnectButtonText,
+}: Props) {
+  const ownerENS = useENS(owner);
+  const { contract } = useContract("roots");
 
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+  const { handlePurchase, purchaseState, errorMessage } = usePurchase({
+    tokenId,
+  });
 
-async function getOwner(contract: Roots, tokenId: number) {
-  try {
-    const owner = await contract.ownerOf(tokenId);
-    return owner;
-  } catch (e) {
-    console.error("Failed to get owner", e);
-    return ZERO_ADDRESS;
+  const formattedPrice = ethers.utils.formatUnits(purchasePrice, "ether");
+
+  const onPurchase = async () => {
+    await handlePurchase(purchasePrice);
+    if (refreshQuery) {
+      refreshQuery();
+    }
+  };
+
+  if (isCheckingOwner) {
+    return <p className="loadingText" />;
   }
-}
 
-export default function SaleInformation({ tokenId }: Props) {
-  const { account } = useWeb3();
-  const { openModal } = useModal();
-  const { mintPrice, readonlyContract, writeableContract } = useMint();
-  const [owner, setOwner] = useState("");
-  const [mintingState, setMintingState] = useState<MintingState>(
-    MintingState.NOT_READY
-  );
-  const alreadyMinted = mintingState === MintingState.ALREADY_MINTED;
-
-  // Set state of minting
-  useEffect(() => {
-    async function doWork() {
-      // Check if it's been minted, and set ALREADY_MINTED
-      const owner = await getOwner(readonlyContract, tokenId);
-      if (owner !== ZERO_ADDRESS) {
-        setMintingState(MintingState.ALREADY_MINTED);
-        return;
-      }
-      // Check if there's an account connected and set NOT_CONNECTED
-      if (!account) {
-        setMintingState(MintingState.NOT_CONNECTED);
-        return;
-      }
-      // Check if there's a writeable contract for minting and set READY
-      if (writeableContract) {
-        setMintingState(MintingState.READY);
-      }
-    }
-    doWork();
-  }, [tokenId, account, writeableContract]);
-
-  // Set the owner of the token
-  useEffect(() => {
-    async function setFormattedOwner() {
-      const owner = await getOwner(readonlyContract, tokenId);
-      const formattedOwner = await getFriendlyAddress(owner);
-      setOwner(formattedOwner);
-    }
-    setOwner("");
-    if (alreadyMinted) {
-      setFormattedOwner();
-    }
-  }, [tokenId, alreadyMinted]);
-
-  // When the mint button is pressed
-  const handleMint = useCallback(async () => {
-    if (!account) {
-      setMintingState(MintingState.NOT_CONNECTED);
-      openModal(ModalType.WEB3_CONNECT);
-      return;
-    }
-    if (!writeableContract) {
-      setMintingState(MintingState.NOT_READY);
-      return;
-    }
-    if (mintingState === MintingState.ERROR) {
-      setMintingState(MintingState.READY);
-    }
-    if (
-      ![MintingState.READY, MintingState.ERROR].includes(mintingState as any)
-    ) {
-      return;
-    }
-
-    try {
-      setMintingState(MintingState.WAITING);
-      const price = await writeableContract.price();
-      const tx = await writeableContract.mint(tokenId, { value: price });
-      setMintingState(MintingState.BROADCASTED);
-      await tx.wait();
-      setMintingState(MintingState.CONFIRMED);
-      setTimeout(() => {
-        setMintingState(MintingState.ALREADY_MINTED);
-      }, 4000);
-    } catch (e) {
-      console.error(e);
-      setMintingState(MintingState.ERROR);
-    }
-  }, [mintingState]);
-
-  const buttonText = useMemo(() => {
-    switch (mintingState) {
-      case MintingState.NOT_CONNECTED:
-        return "Connect wallet to buy";
-      default:
-        return `Buy for ${getPriceText(mintPrice)}`;
-    }
-  }, [mintingState]);
-
-  if (mintingState == MintingState.ALREADY_MINTED) {
+  if (owner) {
     return (
       <p>
         Owned by{" "}
-        {owner && owner !== ZERO_ADDRESS ? (
-          <a
-            className="link"
-            href={`https://opensea.io/assets/${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}/${tokenId}`}
-          >
-            {owner}
-          </a>
-        ) : (
-          <span className="loadingText" />
-        )}
+        <a
+          className="link"
+          href={`https://opensea.io/assets/${contract?.address}/${tokenId}`}
+        >
+          {ownerENS ? ownerENS.displayName : <span className="loadingText" />}
+        </a>
       </p>
     );
   }
 
-  if (mintingState === MintingState.WAITING) {
+  const buttonText =
+    showConnectButtonText && purchaseState === State.NOT_CONNECTED
+      ? "Connect wallet"
+      : `Buy • ${formattedPrice} ETH`;
+
+  if (purchaseState === State.WAITING) {
     return <p className="loadingText">Check your wallet to confirm</p>;
   }
 
-  if (mintingState === MintingState.BROADCASTED) {
+  if (purchaseState === State.BROADCASTED) {
     return <p className="loadingText">Confirming on the network</p>;
   }
 
-  if (mintingState === MintingState.CONFIRMED) {
-    return <p>Purchase successful!</p>;
+  if (purchaseState === State.CONFIRMED) {
+    return <p>Thank you for your purchase!</p>;
   }
 
-  if (mintingState === MintingState.NOT_READY) {
-    return <p className="loadingText">Loading</p>;
+  if (purchaseState === State.NOT_CONNECTED || purchaseState === State.READY) {
+    return (
+      <div>
+        <button onClick={onPurchase}>{buttonText}</button>
+      </div>
+    );
   }
 
-  return <button onClick={handleMint}>{buttonText}</button>;
+  if (purchaseState === State.ERROR) {
+    return (
+      <p>
+        {errorMessage}… <TextButton onClick={onPurchase}>try again</TextButton>
+      </p>
+    );
+  }
+
+  return <p className="loadingText" />;
 }

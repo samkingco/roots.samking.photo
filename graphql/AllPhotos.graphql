@@ -1,0 +1,14 @@
+query AllPhotos {
+  rootsPhotos(orderBy: tokenId) {
+    tokenId
+    owner {
+      address
+    }
+  }
+  rootsStatus(id: "roots.status") {
+    maxPhotos
+    primarySalePrice
+    totalBurned
+    totalSold
+  }
+}

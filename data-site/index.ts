@@ -1,12 +1,4 @@
 import photo1 from "./photos/1.jpg";
-import photo2 from "./photos/2.jpg";
-import photo3 from "./photos/3.jpg";
-import photo4 from "./photos/4.jpg";
-import photo5 from "./photos/5.jpg";
-import photo6 from "./photos/6.jpg";
-import photo7 from "./photos/7.jpg";
-import photo8 from "./photos/8.jpg";
-import photo9 from "./photos/9.jpg";
 import photo10 from "./photos/10.jpg";
 import photo11 from "./photos/11.jpg";
 import photo12 from "./photos/12.jpg";
@@ -17,6 +9,7 @@ import photo16 from "./photos/16.jpg";
 import photo17 from "./photos/17.jpg";
 import photo18 from "./photos/18.jpg";
 import photo19 from "./photos/19.jpg";
+import photo2 from "./photos/2.jpg";
 import photo20 from "./photos/20.jpg";
 import photo21 from "./photos/21.jpg";
 import photo22 from "./photos/22.jpg";
@@ -27,6 +20,7 @@ import photo26 from "./photos/26.jpg";
 import photo27 from "./photos/27.jpg";
 import photo28 from "./photos/28.jpg";
 import photo29 from "./photos/29.jpg";
+import photo3 from "./photos/3.jpg";
 import photo30 from "./photos/30.jpg";
 import photo31 from "./photos/31.jpg";
 import photo32 from "./photos/32.jpg";
@@ -37,7 +31,13 @@ import photo36 from "./photos/36.jpg";
 import photo37 from "./photos/37.jpg";
 import photo38 from "./photos/38.jpg";
 import photo39 from "./photos/39.jpg";
+import photo4 from "./photos/4.jpg";
 import photo40 from "./photos/40.jpg";
+import photo5 from "./photos/5.jpg";
+import photo6 from "./photos/6.jpg";
+import photo7 from "./photos/7.jpg";
+import photo8 from "./photos/8.jpg";
+import photo9 from "./photos/9.jpg";
 
 export enum PhotoSize {
   SMALL = "photoSmall",
@@ -51,7 +51,7 @@ export interface Photo {
   size: PhotoSize;
 }
 
-export const data: Photo[] = [
+export const content: Photo[] = [
   {
     tokenId: 1,
     src: photo1,

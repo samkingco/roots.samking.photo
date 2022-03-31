@@ -1,0 +1,11 @@
+query PhotoById($id: ID!) {
+  rootsPhoto(id: $id) {
+    tokenId
+    owner {
+      address
+    }
+  }
+  rootsStatus(id: "roots.status") {
+    primarySalePrice
+  }
+}

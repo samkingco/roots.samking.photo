@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
 import clsx from "clsx";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { Image } from "components/Image";
+import styles from "components/PhotoPage.module.css";
+import { TextButton } from "components/TextButton";
+import { Photo } from "data-site/index";
+import { ethers } from "ethers";
+import { usePhotoByIdQuery } from "graphql/subgraph";
 import { useContextualRouting } from "next-use-contextual-routing";
 import Head from "next/head";
-import { Photo } from "data-site/index";
-import { Image } from "components/Image";
-import { TextButton } from "components/TextButton";
-import styles from "components/PhotoPage.module.css";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 import SaleInformation from "./SaleInformation";
 
 const wrap = (min: number, max: number, v: number) => {
@@ -25,6 +27,21 @@ interface Props {
 export function PhotoPage({ photo, onClose, closeHref, totalPhotos }: Props) {
   const router = useRouter();
   const { makeContextualHref } = useContextualRouting();
+
+  const [photoByIdQuery, refreshQuery] = usePhotoByIdQuery({
+    requestPolicy: "cache-and-network",
+    variables: { id: `${photo.tokenId}` },
+  });
+
+  const { data, fetching: isCheckingOwner } = photoByIdQuery;
+  const mintedPhoto = (data && data.rootsPhoto) || undefined;
+
+  const rootsStatus = (data && data.rootsStatus) || undefined;
+  const purchasePrice =
+    (rootsStatus &&
+      rootsStatus.primarySalePrice &&
+      ethers.utils.parseUnits(rootsStatus.primarySalePrice, "wei")) ||
+    ethers.utils.parseEther("0.1");
 
   const prevId = wrap(1, totalPhotos + 1, photo.tokenId - 1);
   const nextId = wrap(1, totalPhotos + 1, photo.tokenId + 1);
@@ -92,12 +109,11 @@ export function PhotoPage({ photo, onClose, closeHref, totalPhotos }: Props) {
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@samkingco" />
       </Head>
-      <article className={styles.page}>
+      <article className={styles.page} key={photo.tokenId}>
         <p>Roots #{photo.tokenId}</p>
         <nav className={styles.rightCol}>{closeContent}</nav>
         <div className={styles.image}>
           <Image
-            key={photo.tokenId}
             src={photo.src}
             alt=""
             title=""
@@ -108,7 +124,14 @@ export function PhotoPage({ photo, onClose, closeHref, totalPhotos }: Props) {
           />
         </div>
         <div className={styles.cta}>
-          <SaleInformation tokenId={photo.tokenId} />
+          <SaleInformation
+            tokenId={photo.tokenId}
+            owner={mintedPhoto && mintedPhoto.owner.address}
+            isCheckingOwner={isCheckingOwner}
+            purchasePrice={purchasePrice}
+            refreshQuery={refreshQuery}
+            showConnectButtonText
+          />
         </div>
         <nav className={styles.pagination}>
           <Link

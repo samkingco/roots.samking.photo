@@ -1,22 +1,37 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
-import Head from "next/head";
-import Link from "next/link";
-import { useContextualRouting } from "next-use-contextual-routing";
 import clsx from "clsx";
-import styles from "components/IndexPage.module.css";
-import { data, Photo } from "data-site/index";
 import { Image } from "components/Image";
+import styles from "components/IndexPage.module.css";
 import { Modal } from "components/Modal";
 import { PhotoPage } from "components/PhotoPage";
 import { TextButton } from "components/TextButton";
+import { content, Photo } from "data-site/index";
+import { ethers } from "ethers";
+import {
+  AllPhotosQuery,
+  RootsPhoto,
+  useAllPhotosQuery,
+} from "graphql/subgraph";
+import { useContextualRouting } from "next-use-contextual-routing";
+import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useEffect, useRef, useState } from "react";
+import SaleInformation from "./SaleInformation";
 import { VisuallyHidden } from "./VisuallyHidden";
-import { useMint } from "hooks/useMint";
-import { getPriceText } from "utils/price";
 
 enum Layout {
   SCROLL = "scroll",
   GRID = "grid",
+}
+
+function makePhotosByID(query: AllPhotosQuery) {
+  const byId: { [key: string]: RootsPhoto } = {};
+  const photos = query.rootsPhotos;
+  for (let i = 0; i < photos.length; i++) {
+    const tokenId = `${photos[i].tokenId}`;
+    byId[tokenId] = photos[i] as RootsPhoto;
+  }
+  return byId;
 }
 
 export function IndexPage() {
@@ -27,11 +42,25 @@ export function IndexPage() {
   const refs = useRef<Array<HTMLAnchorElement | null>>([]);
   const photoContainerRef = useRef<HTMLElement | null>(null);
   const [showExcerpt, setShowExcerpt] = useState(false);
-  const { mintPrice } = useMint();
+
+  const [allPhotosQuery, refreshQuery] = useAllPhotosQuery({
+    requestPolicy: "cache-and-network",
+  });
+
+  const { data, fetching } = allPhotosQuery;
+
+  const mintedById = data && data.rootsPhotos ? makePhotosByID(data) : {};
+  const rootsStatus = (data && data.rootsStatus) || undefined;
+  const purchasePrice =
+    (rootsStatus &&
+      rootsStatus.primarySalePrice &&
+      ethers.utils.parseUnits(rootsStatus.primarySalePrice, "wei")) ||
+    ethers.utils.parseEther("0.1");
+  const formattedPrice = ethers.utils.formatUnits(purchasePrice, "ether");
 
   // Setup refs to photo links
   useEffect(() => {
-    refs.current = refs.current.slice(0, data.length);
+    refs.current = refs.current.slice(0, content.length);
     return () => {
       refs.current = [];
     };
@@ -72,7 +101,7 @@ export function IndexPage() {
   };
 
   useEffect(() => {
-    const photo = data.find((i) => `${i.tokenId}` === router.query.photo);
+    const photo = content.find((i) => `${i.tokenId}` === router.query.photo);
     setModalPhoto(photo);
     return () => {
       setModalPhoto(undefined);
@@ -167,7 +196,7 @@ export function IndexPage() {
 
           <h3>About the NFTs</h3>
           <ul>
-            <li>40 photos, no editions, {getPriceText(mintPrice)} each</li>
+            <li>40 photos, no editions, {formattedPrice} ETH each</li>
             <li>Each photo is an ERC721 token with data on Arweave</li>
             <li>
               Aperture, exposure, ISO, and focal length are included as
@@ -229,7 +258,7 @@ export function IndexPage() {
           ref={photoContainerRef}
         >
           <ol className={styles[`${layout}Layout`]}>
-            {data.map((photo) => (
+            {content.map((photo) => (
               <li
                 key={photo.tokenId}
                 className={clsx([styles.photoWrapper, styles[photo.size]])}
@@ -246,7 +275,15 @@ export function IndexPage() {
                     <Image src={photo.src} alt="" layout="responsive" />
                   </a>
                 </Link>
-                <p>#{photo.tokenId}</p>
+                <SaleInformation
+                  tokenId={photo.tokenId}
+                  owner={
+                    mintedById[photo.tokenId] &&
+                    mintedById[photo.tokenId].owner.address
+                  }
+                  isCheckingOwner={fetching}
+                  purchasePrice={purchasePrice}
+                />
               </li>
             ))}
           </ol>
@@ -261,7 +298,7 @@ export function IndexPage() {
             <PhotoPage
               photo={modalPhoto}
               onClose={onModalClose}
-              totalPhotos={data.length}
+              totalPhotos={content.length}
             />
           )}
         </Modal>

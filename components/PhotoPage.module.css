@@ -22,39 +22,6 @@
   margin-bottom: 1rem;
 }
 
-.cta button {
-  width: 100%;
-  margin: 0;
-  padding: 0.5rem;
-  background: var(--foreground);
-  color: var(--background);
-}
-
-.cta button:hover {
-  color: var(--foreground);
-  background: var(--accent);
-  text-decoration: none;
-}
-
-.cta button:focus-visible {
-  color: var(--foreground);
-  background: var(--accent);
-  text-decoration: none;
-  outline: none;
-}
-
-.cta button:focus-visible:hover {
-  color: var(--background);
-  background: var(--foreground);
-}
-
-@media (prefers-color-scheme: light) {
-  .cta button:focus-visible,
-  .cta button:hover {
-    color: var(--background);
-  }
-}
-
 .pagination {
   grid-area: pagination;
   display: flex;
@@ -85,12 +52,6 @@
 
   .cta {
     margin-bottom: 0;
-  }
-
-  .cta button {
-    width: auto;
-    margin: -0.25rem 0;
-    padding: 0.25rem 0.5rem;
   }
 
   .pagination {
