@@ -11,7 +11,6 @@
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "^3.0.5",
     "@gimmixorg/use-wallet": "^0.0.31",
     "@reach/dialog": "^0.16.0",
     "@walletconnect/web3-provider": "^1.7.7",
@@ -20,7 +19,6 @@
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.4",
     "clsx": "^1.1.1",
-    "eth-provider": "^0.10.0",
     "ethers": "^5.4.7",
     "graphql": "^16.3.0",
     "next": "11.1.2",

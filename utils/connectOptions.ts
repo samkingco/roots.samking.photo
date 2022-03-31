@@ -1,6 +1,4 @@
-import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import ethProvider from "eth-provider";
 import { ICoreOptions } from "web3modal";
 
 export const connectOptions: Partial<ICoreOptions> = {
@@ -16,16 +14,6 @@ export const connectOptions: Partial<ICoreOptions> = {
           4: `https://rinkeby.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
         },
       },
-    },
-    walletlink: {
-      package: CoinbaseWalletSDK,
-      options: {
-        appName: "Behold The Ocean",
-        infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
-      },
-    },
-    frame: {
-      package: ethProvider,
     },
   },
 };

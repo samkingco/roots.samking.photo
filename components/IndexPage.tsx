@@ -11,6 +11,7 @@ import {
   RootsPhoto,
   useAllPhotosQuery,
 } from "graphql/subgraph";
+import { useContract } from "hooks/useContract";
 import { useContextualRouting } from "next-use-contextual-routing";
 import Head from "next/head";
 import Link from "next/link";
@@ -43,6 +44,8 @@ export function IndexPage() {
   const photoContainerRef = useRef<HTMLElement | null>(null);
   const [showExcerpt, setShowExcerpt] = useState(false);
 
+  const { contract } = useContract("roots");
+
   const [allPhotosQuery, refreshQuery] = useAllPhotosQuery({
     requestPolicy: "cache-and-network",
   });
@@ -58,7 +61,7 @@ export function IndexPage() {
     ethers.utils.parseEther("0.1");
   const formattedPrice = ethers.utils.formatUnits(purchasePrice, "ether");
 
-  // Setup refs to photo links
+  // Setup refs to photo links for scrolling into view when the modal is closed
   useEffect(() => {
     refs.current = refs.current.slice(0, content.length);
     return () => {
@@ -67,7 +70,7 @@ export function IndexPage() {
   }, []);
 
   const openSeaLink = "https://opensea.io/collection/roots-by-sam-king";
-  const contractLink = `https://etherscan.io/address/${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`;
+  const contractLink = `https://etherscan.io/address/${contract?.address}`;
   const twitterLink = "https://twitter.com/samkingco";
   const instagramLink = "https://instagram.com/samkingco";
 
@@ -239,10 +242,10 @@ export function IndexPage() {
           </div>
 
           <nav className={styles.links}>
-            {/* <a className="link" href={openSeaLink} aria-label="OpenSea">
-            OS
-          </a>
-          <span className="subdued">·</span> */}
+            <a className="link" href={openSeaLink} aria-label="OpenSea">
+              OS
+            </a>
+            <span className="subdued">·</span>
             <a className="link" href={twitterLink} aria-label="Twitter">
               TW
             </a>
@@ -283,6 +286,7 @@ export function IndexPage() {
                   }
                   isCheckingOwner={fetching}
                   purchasePrice={purchasePrice}
+                  refreshQuery={refreshQuery}
                 />
               </li>
             ))}
