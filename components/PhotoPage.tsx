@@ -106,7 +106,7 @@ export function PhotoPage({ photo, onClose, closeHref, totalPhotos }: Props) {
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={socialImage} />
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@samkingco" />
       </Head>
       <article className={styles.page} key={photo.tokenId}>
